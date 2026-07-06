@@ -11,4 +11,4 @@ export const firebaseConfig = {
 
 // Firebase Authentication에서 만든 관리자 계정의 uid를 넣으세요.
 // 여러 명이면 ["uid1", "uid2"]처럼 추가하면 됩니다.
-export const adminUids = ["Vuy9m1rG8TV43XYg6SHhQKTniGu2"];
+export const adminUids = ["Vuy9m1rG8TV43XYg6SHhQKTniGu2","sOdnof7L6hT0kO4AFORctOaYj9y1"];
