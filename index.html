@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>바다거북수프 아카이브</title>
+    <meta
+      name="description"
+      content="바다거북수프 문제를 모아보고, 난이도와 창의성 별점으로 탐색하는 정적 웹사이트입니다."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-copy">
+        <p class="eyebrow">Lateral Thinking Puzzle Archive</p>
+        <h1>바다거북수프 아카이브</h1>
+        <p>
+          제목과 제시문을 보고 질문을 추리하세요. 정답은 버튼을 눌러 확인할 수 있습니다.
+        </p>
+      </div>
+      <div class="header-actions">
+        <button id="adminLoginButton" class="button secondary" type="button">관리자 로그인</button>
+        <button id="adminLogoutButton" class="button danger hidden" type="button">로그아웃</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="toolbar" aria-label="문제 검색 및 필터">
+        <label class="search-box">
+          <span>검색</span>
+          <input id="searchInput" type="search" placeholder="제목 또는 제시문 검색" autocomplete="off" />
+        </label>
+        <label class="select-box">
+          <span>정렬</span>
+          <select id="sortSelect">
+            <option value="newest">최신순</option>
+            <option value="difficultyDesc">난이도 높은순</option>
+            <option value="creativityDesc">창의성 높은순</option>
+            <option value="titleAsc">제목순</option>
+          </select>
+        </label>
+      </section>
+
+      <section id="setupNotice" class="notice hidden" aria-live="polite"></section>
+
+      <section id="adminPanel" class="admin-panel hidden" aria-label="관리자 문제 편집 패널">
+        <div>
+          <p class="eyebrow">Admin</p>
+          <h2 id="formTitle">문제 추가</h2>
+        </div>
+
+        <form id="problemForm" class="problem-form">
+          <input id="problemId" type="hidden" />
+
+          <label>
+            <span>제목</span>
+            <input id="titleInput" type="text" maxlength="80" required placeholder="예: 마지막 수프" />
+          </label>
+
+          <label>
+            <span>제시문</span>
+            <textarea id="promptInput" rows="5" required placeholder="문제 제시문을 입력하세요."></textarea>
+          </label>
+
+          <label>
+            <span>정답</span>
+            <textarea id="answerInput" rows="5" required placeholder="정답과 해설을 입력하세요."></textarea>
+          </label>
+
+          <div class="rating-grid">
+            <label>
+              <span>난이도</span>
+              <input id="difficultyInput" type="range" min="1" max="5" value="3" />
+              <strong id="difficultyValue">3</strong>
+            </label>
+            <label>
+              <span>창의성</span>
+              <input id="creativityInput" type="range" min="1" max="5" value="3" />
+              <strong id="creativityValue">3</strong>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="button primary" type="submit">저장</button>
+            <button id="resetFormButton" class="button secondary" type="button">초기화</button>
+            <button id="seedButton" class="button secondary" type="button">샘플 문제 넣기</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="summary" aria-live="polite">
+        <strong id="problemCount">0개 문제</strong>
+        <span id="adminStatus">방문자 모드</span>
+      </section>
+
+      <section id="problemList" class="problem-list" aria-label="문제 목록"></section>
+      <section id="emptyState" class="empty-state hidden">
+        <h2>표시할 문제가 없습니다.</h2>
+        <p>관리자 계정으로 로그인해 문제를 추가하세요.</p>
+      </section>
+    </main>
+
+    <dialog id="loginDialog" class="dialog">
+      <form id="loginForm" method="dialog" class="login-form">
+        <div>
+          <p class="eyebrow">Admin Login</p>
+          <h2>관리자 로그인</h2>
+          <p>관리자 계정 이외의 계정은 쓰기 권한이 없습니다.</p>
+        </div>
+        <label>
+          <span>이메일</span>
+          <input id="emailInput" type="email" required autocomplete="username" />
+        </label>
+        <label>
+          <span>비밀번호</span>
+          <input id="passwordInput" type="password" required autocomplete="current-password" />
+        </label>
+        <p id="loginError" class="error hidden"></p>
+        <div class="form-actions">
+          <button class="button primary" type="submit">로그인</button>
+          <button id="closeLoginButton" class="button secondary" type="button">닫기</button>
+        </div>
+      </form>
+    </dialog>
+
+    <template id="problemCardTemplate">
+      <article class="problem-card">
+        <div class="card-head">
+          <div>
+            <p class="card-number"></p>
+            <h2 class="card-title"></h2>
+          </div>
+          <div class="admin-card-actions hidden">
+            <button class="button small secondary edit-button" type="button">수정</button>
+            <button class="button small danger delete-button" type="button">삭제</button>
+          </div>
+        </div>
+        <p class="prompt"></p>
+        <div class="ratings">
+          <span class="rating difficulty-rating"></span>
+          <span class="rating creativity-rating"></span>
+        </div>
+        <button class="button answer-toggle" type="button">정답 보기</button>
+        <div class="answer hidden"></div>
+      </article>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
